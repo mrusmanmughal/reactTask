@@ -1,8 +1,13 @@
-const FormBtn = ({ children }) => {
+import { Link } from "react-router-dom";
+
+const FormBtn = ({ children, to }) => {
   return (
-    <button className="bg-YellowT w-full rounded-md text-white py-2">
+    <Link
+      to={to}
+      className="bg-YellowT block text-center w-full rounded-md text-white py-2"
+    >
       {children}
-    </button>
+    </Link>
   );
 };
 
