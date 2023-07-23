@@ -4,16 +4,16 @@ import SideSection from "../UI/SideSection";
 const SignIn = () => {
   return (
     <>
-      <div className="w-full">
-        <div className="p-10">
+      <div className="w-full ">
+        <div className="px-10">
           <EnglishBtn />
           <div className="flex gap-10 ">
             <SideSection />
-            <div className="w-full flex flex-col justify-center">
+            <div className="w-full flex flex-col justify-center gap-5">
               <div className="text-end text-2xl text-slate-500  font-medium">
                 Enter your phone number
               </div>
-              <div className="flex gap-5 my-5">
+              <form className="flex gap-5 ">
                 {" "}
                 <input
                   type="text"
@@ -25,9 +25,9 @@ const SignIn = () => {
                   placeholder="3xx xxxxxxx"
                   className="   w-full  px-5 text-2xl font-light border"
                 />
-              </div>
+              </form>
               <div>
-                <FormBtn>Sign Up</FormBtn>
+                <FormBtn to="/otp">Sign Up</FormBtn>
               </div>
             </div>
           </div>
