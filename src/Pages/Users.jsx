@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { GetUserList } from "../Services/UserLishHooks";
+import GetUserList from "../Services/UserLishHooks";
 import { useState } from "react";
 import {
   AiFillEye,
@@ -8,23 +8,25 @@ import {
   AiOutlineUser,
   AiOutlineMessage,
 } from "react-icons/ai";
-import { BsFillTelephoneFill } from "react-icons/bs";
+import { GetLanguage } from "../Context/UseLanguagContext";
+
 const Users = () => {
-  const [data, setdata] = useState();
-  useEffect(() => {
-    GetUserList().then((val) => setdata(val));
-  }, []);
-  console.log(data?.data);
+  const { language } = GetLanguage();
+
+  const { data, isError, isLoading } = GetUserList();
+  console.log(data);
+  const [list, setlist] = useState();
 
   return (
     <div className="bg-white   p-5 rounded-lg divide-y text-textColor ">
       <div className="divide-y-8">
         <div className="flex justify-between  ">
           <button className="bg-GreenT py-1 px-3 rounded-lg text-white flex gap-1 items-center">
-            Add Users <span className="text-YellowT text-2xl">+</span>
+            {language ? "إضافة مستخدم" : "Add Users"}{" "}
+            <span className="text-YellowT text-2xl">+</span>
           </button>
           <div className="flex items-center gap-2 font-semibold">
-            Users
+            {language ? "مستخدم" : " Users"}
             <p className=" bg-lightGreen text-GreenT p-1 rounded-lg">
               <AiOutlineUser />
             </p>
@@ -32,7 +34,7 @@ const Users = () => {
         </div>
       </div>
       <div className="my-4">
-        <p className="text-end my-2">Search</p>
+        <p className="text-end my-2">{language ? "يبحث" : "search"}</p>
         <div className="flex gap-4">
           <input
             type="text"
@@ -51,16 +53,16 @@ const Users = () => {
 
       <div className="">
         <div className=" flex  justify-around bottom-7">
-          <p className="w-full">Actions</p>
+          <p className="w-full">{language ? "أجراءات" : "Actions"}</p>
 
-          <p className="w-full">Image</p>
+          <p className="w-full">{language ? "صورة" : "Image"}</p>
 
-          <p className="w-full">Phone</p>
-          <p className="w-full">Email</p>
-          <p className="w-full text-end">Users</p>
+          <p className="w-full">{language ? "بريد إلكتروني" : "Phone"}</p>
+          <p className="w-full">{language ? "بريد إلكتروني" : "Email"}</p>
+          <p className="w-full text-end">{language ? "المستخدمين" : "Users"}</p>
         </div>
         <div className="divide-y  text-sm ">
-          {data?.data?.map((val, i) => {
+          {list?.list?.map((val, i) => {
             return (
               <div key={i} className="flex   items-start p-4 ">
                 <div className="flex gap-3 w-full">

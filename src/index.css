@@ -16,7 +16,12 @@
     @apply rounded-md;
   }
 }
-
+.otp-container {
+  @apply flex justify-between gap-2;
+}
+.otp-container input {
+  @apply border  text-8xl     rounded-lg;
+}
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
@@ -25,9 +30,6 @@
   }
 }
 
-li:hover {
-  background-color: #078c61;
-}
 .active {
   background-color: #078c61;
   color: white;

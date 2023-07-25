@@ -6,53 +6,64 @@ import {
   AiFillDashboard,
 } from "react-icons/ai";
 import { useState } from "react";
+import { GetLanguage } from "../Context/UseLanguagContext";
 const SideBar = () => {
   const [active, setactive] = useState("");
+  const { language } = GetLanguage();
   const Links = [
     {
       name: "Dashboard",
       to: "/db",
       icon: <AiFillDashboard />,
+      arabic: "لوحة القيادة",
     },
     {
       name: "Profile",
       to: "p",
       icon: "",
+      arabic: "حساب تعريفي",
     },
     {
       name: "Inventory",
       to: "i",
       icon: "",
+      arabic: "جرد",
     },
     {
       name: "Purchase Request",
       to: "dashboard",
       icon: "",
+      arabic: "طلب الشراء",
     },
     {
       name: "Items Request ",
       to: "dashboard",
       icon: "",
+      arabic: "طلب الأصناف",
     },
     {
       name: "Mettings",
       to: "metting",
       icon: "",
+      arabic: "ميتينغس",
     },
     {
       name: "Messages",
-      to: "messages",
+      to: "chat",
       icon: <AiOutlineMessage />,
+      arabic: "رسائل",
     },
     {
       name: "Users",
       to: "users",
       icon: <AiOutlineUserAdd />,
+      arabic: "المستخدمون",
     },
     {
       name: "Settings",
       to: "s",
       icon: "",
+      arabic: "إعدادات",
     },
   ];
   return (
@@ -65,7 +76,7 @@ const SideBar = () => {
           return (
             <NavLink
               to={link.to}
-              className=" mx-4 m-2 px-3 py-2 flex items-center gap-1 text-slate-700 hover:bg-GreenT rounded-md "
+              className=" mx-4 m-2 px-3 py-2 flex items-center gap-1 text-slate-700 hover:bg-GreenT hover:text-white rounded-md "
               key={i}
               onClick={() => setactive(link.name)}
             >
@@ -76,13 +87,15 @@ const SideBar = () => {
               >
                 {link.icon}
               </span>
-              {link.name}
+              {language ? link.arabic : link.name}
             </NavLink>
           );
         })}
       </div>
       <div className="text-center font-semibold">
-        <button className="bg-RedT px-3 py-1 rounded-md  mb-4">Logout</button>
+        <button className="bg-RedT px-3 py-1 rounded-md  mb-4">
+          {language ? "تسجيل خروج" : "Logout"}
+        </button>
       </div>
     </div>
   );
