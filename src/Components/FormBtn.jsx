@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 const FormBtn = ({ children, to }) => {
   return (
     <Link
+      type="submit"
       to={to}
       className="bg-YellowT block text-center w-full rounded-md text-white py-2"
     >

@@ -1,11 +1,18 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const GetUserList = async () => {
-  const API = "https://hub.dummyapis.com/employee?noofRecords=10&idStarts=1001";
-  try {
+const GetUserList = () => {
+  const data = async () => {
+    const API = "https://dummy.restapiexample.com/api/v1/employees ";
+
     const response = await axios.get(API);
+    console.log(response);
     return response;
-  } catch (err) {
-    console.log(err);
-  }
+  };
+
+  return useQuery({
+    queryKey: ["users"],
+    queryFn: data,
+  });
 };
+export default GetUserList;
