@@ -3,7 +3,7 @@ import axios from "axios";
 
 const GetUserList = () => {
   const data = async () => {
-    const API = "https://dummy.restapiexample.com/api/v1/employees ";
+    const API = "https://jsonplaceholder.typicode.com/users";
 
     const response = await axios.get(API);
     console.log(response);
