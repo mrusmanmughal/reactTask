@@ -11,11 +11,17 @@ import {
 import { GetLanguage } from "../Context/UseLanguagContext";
 
 const Users = () => {
+  const [list, setlist] = useState();
+
   const { language } = GetLanguage();
 
   const { data, isError, isLoading } = GetUserList();
+
+  useEffect(() => {
+    setlist(data);
+  }, [data]);
+
   console.log(data);
-  const [list, setlist] = useState();
 
   return (
     <div className="bg-white   p-5 rounded-lg divide-y text-textColor ">
@@ -51,18 +57,18 @@ const Users = () => {
         </div>
       </div>
 
-      <div className="">
-        <div className=" flex  justify-around bottom-7">
+      <div role="table ">
+        <div className=" flex  justify-around bottom-7 p-5 border-b font-semibold">
           <p className="w-full">{language ? "أجراءات" : "Actions"}</p>
 
-          <p className="w-full">{language ? "صورة" : "Image"}</p>
+          <p className="w-full">{language ? "صورة" : "Website"}</p>
 
           <p className="w-full">{language ? "بريد إلكتروني" : "Phone"}</p>
           <p className="w-full">{language ? "بريد إلكتروني" : "Email"}</p>
           <p className="w-full text-end">{language ? "المستخدمين" : "Users"}</p>
         </div>
         <div className="divide-y  text-sm ">
-          {list?.list?.map((val, i) => {
+          {list?.data?.map((val, i) => {
             return (
               <div key={i} className="flex   items-start p-4 ">
                 <div className="flex gap-3 w-full">
@@ -70,20 +76,13 @@ const Users = () => {
                   <AiFillEdit />
                   <AiOutlineDelete />
                 </div>
-                <div className="w-full">
-                  <img
-                    src={val.imageUrl}
-                    width={40}
-                    className="rounded-full"
-                    alt=""
-                  />
-                </div>
+                <div className="w-full">{val.website}</div>
 
-                <div className="w-full">{val.contactNumber}</div>
+                <div className="w-full">{val.phone}</div>
 
                 <div className="w-full">{val.email}</div>
 
-                <div className="w-full text-end">{val.firstName}</div>
+                <div className="w-full text-end">{val.name}</div>
               </div>
             );
           })}

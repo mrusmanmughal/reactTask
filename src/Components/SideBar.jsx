@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import EnglishBtn from "./EnglishBtn";
 import {
   AiOutlineUserAdd,
@@ -7,9 +7,13 @@ import {
 } from "react-icons/ai";
 import { useState } from "react";
 import { GetLanguage } from "../Context/UseLanguagContext";
+import { signOut } from "firebase/auth";
+import { UseAuth } from "../Context/AuthContext";
+import { Auth } from "../Services/Firebase.config";
 const SideBar = () => {
   const [active, setactive] = useState("");
   const { language } = GetLanguage();
+  const navigate = useNavigate();
   const Links = [
     {
       name: "Dashboard",
@@ -66,6 +70,13 @@ const SideBar = () => {
       arabic: "إعدادات",
     },
   ];
+  const { dispatch } = UseAuth();
+
+  const handleLogOut = async () => {
+    await signOut(Auth);
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+  };
   return (
     <div className="bg-white    rounded-lg w-1/4 ">
       <div className="text-center  divide-y  divide-double">
@@ -93,7 +104,10 @@ const SideBar = () => {
         })}
       </div>
       <div className="text-center font-semibold">
-        <button className="bg-RedT px-3 py-1 rounded-md  mb-4">
+        <button
+          className="bg-RedT px-3 py-1 rounded-md  mb-4"
+          onClick={handleLogOut}
+        >
           {language ? "تسجيل خروج" : "Logout"}
         </button>
       </div>

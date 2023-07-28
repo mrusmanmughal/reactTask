@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
-
-const FormBtn = ({ children, to }) => {
+import load from "../Assets/spinner.gif";
+const FormBtn = ({ children, to, type, loading }) => {
   return (
-    <Link
-      type="submit"
+    <button
       to={to}
-      className="bg-YellowT block text-center w-full rounded-md text-white py-2"
+      type={type}
+      className="bg-YellowT  text-center w-full rounded-md flex justify-center items-center gap-2  text-white py-2"
     >
+      {loading && <img src={load} width={20} />}
       {children}
-    </Link>
+    </button>
   );
 };
 
