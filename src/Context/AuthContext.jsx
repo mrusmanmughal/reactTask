@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useContext } from "react";
 import { useReducer } from "react";
 import { createContext } from "react";
@@ -17,11 +16,12 @@ const reducer = (state, action) => {
         ...state,
         isAuthenticated: true,
         user: action.payload.uid,
-        token: action.payload.token,
+        token: action.payload.accessToken,
       };
 
     case "LOGOUT":
       localStorage.clear();
+
       return {
         ...state,
         isAuthenticated: false,

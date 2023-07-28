@@ -9,6 +9,7 @@ import { toast } from "react-hot-toast";
 import OTPInput from "react-otp-input";
 import { AuthProvider, UseAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 const SignIn = () => {
   const [Number, setNumber] = useState({
     code: "",
@@ -16,6 +17,7 @@ const SignIn = () => {
   });
   const navigate = useNavigate();
   const { dispatch } = UseAuth();
+  const cookies = new Cookies();
 
   const { language } = GetLanguage();
   const [otp, setOtp] = useState("");
@@ -44,6 +46,7 @@ const SignIn = () => {
       );
     }
   }
+  const formatPh = "+" + code + number;
 
   function onSignup(e) {
     e.preventDefault();
@@ -51,8 +54,6 @@ const SignIn = () => {
     onCaptchVerify();
 
     const appVerifier = window.recaptchaVerifier;
-
-    const formatPh = "+" + code + number;
 
     signInWithPhoneNumber(Auth, formatPh, appVerifier)
       .then((confirmationResult) => {
@@ -74,15 +75,16 @@ const SignIn = () => {
     window.confirmationResult
       .confirm(otp)
       .then(async (res) => {
-        dispatch({ type: "LOGIN", payload: res });
+        dispatch({ type: "LOGIN", payload: res.user });
         console.log(res.user);
         setLoading(false);
         toast.success("OTP Verified !");
-        localStorage.setItem("token", JSON.stringify(res.token));
+        localStorage.setItem("token", res.user.accessToken);
         navigate("/dashboard");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Invalid OTP !");
         setLoading(false);
       });
   }
@@ -107,7 +109,7 @@ const SignIn = () => {
                       ? "الرجاء إدخال الرمز الذي أرسلناه لكم جميعًا"
                       : "Please enter the code we just sent you all"}
                   </p>
-                  <p className="text-GreenT font-medium">+92304765347</p>
+                  <p className="text-GreenT font-medium">{formatPh}</p>
                 </div>
                 <div className="text-end my-2 ">
                   <span className="bg-BlueT p-2 rounded-md">00</span> :
@@ -136,7 +138,10 @@ const SignIn = () => {
 
                 <div className="font-thin text-end">
                   {language ? "لم تستلم OTP ?" : " Did not receive OTP?"}{" "}
-                  <span className="text-GreenT font-medium">
+                  <span
+                    className="text-GreenT font-medium hover:cursor-pointer"
+                    onClick={onSignup}
+                  >
                     {language ? "مستاء" : "Resent"}
                   </span>
                 </div>
@@ -156,6 +161,7 @@ const SignIn = () => {
                       placeholder="+92 "
                       className="outline-none     w-20 border  font-light p-4 text-2xl"
                       onChange={(e) => handleChange(e)}
+                      required
                     />
                     <input
                       type="number"
@@ -164,6 +170,7 @@ const SignIn = () => {
                       className="   w-full   outline-none  p-2 text-2xl font-light border"
                       onChange={(e) => handleChange(e)}
                       value={number}
+                      required
                     />
                   </div>
                   <div>
